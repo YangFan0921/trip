@@ -2,7 +2,6 @@ package com.journey.trip.controller;
 
 import com.journey.trip.entity.User;
 import com.journey.trip.mapper.UserMapper;
-import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
