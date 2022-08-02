@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" type="text/css"
+          href="../bootstrap3/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css"
+          href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css"/>
+    <link rel="stylesheet" href="css/login.css">
+
+</head>
+<body>
+<!--登录页标题-->
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <h1>
+                    <small>欢迎使用</small> <b>旅拍</b>作品展示系统
+                </h1>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+            <!--登录面板-->
+            <div class="panel panel-default">
+                <!--面板标题-->
+                <div class="panel-heading" id="heading">
+                    <h2 class="panel-title">登录</h2>
+                </div>
+                <!--面板主体-->
+                <div class="panel-body">
+                    <!--登录表单-->
+                    <form id="myform" class="form-horizontal" role="form"
+                          action="loginaction" method="post">
+                        <!--用户名-->
+                        <div class="form-group">
+                            <label for="name" class="col-md-2 control-label">用户名</label>
+                            <div class="col-md-8">
+                                <input type="text"
+                                       class="form-control" id="name" name="username"
+                                       placeholder="请输入用户名">
+                            </div>
+                        </div>
+                        <!--密码-->
+                        <div class="form-group">
+                            <label for="pwd" class="col-md-2 control-label">密码</label>
+                            <div class="col-md-8">
+                                <input type="password"
+                                       class="form-control" id="pwd" name="password"
+                                       placeholder="请输入密码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd" class="col-md-3 control-label">记住用户名和密码</label>
+                            <div class="col-md-9">
+                                <input type="checkbox" name="rem">
+                            </div>
+                        </div>
+                        <!--登录按钮-->
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button type="button" class="btn btn-primary sublogin" @click="login">登录</button>
+                                <span></span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--网页页脚-->
+<footer>
+    <div class="container">
+        <div class="text-center">
+            Copyright © 2022 All Rights Reserved <br/>
+            国ICP备12345678号-5 <a target="_blank" href="">ABC</a>
+            版权所有
+        </div>
+    </div>
+</footer>
+</body>
+<script type="text/javascript" src="../bootstrap3/jquery.min.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/bootstrap.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/holder.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/html5shiv.min.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/css3-mediaqueries.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/respond.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/vue/2.7.6/vue.min.js"></script>
+
+<script>
+    // 取出保存在cookie中的用户名和密码
+    let cookie = document.cookie
+    let cookieArr = cookie.split(";")
+    // 遍历cookie
+    for (let cookieStr of cookieArr) {
+        // 判断是否包含用户名
+        if (cookieStr.indexOf("username") != -1){
+            let username = cookieStr.split("=")[1]
+            $("#name").val(username)
+        }
+        // 判断是否包含密码
+        if (cookieStr.indexOf("password") != -1){
+            let password = cookieStr.split("=")[1]
+            $("#pwd").val(password)
+        }
+    }
+
+    let myform = new Vue({
+        el:"#myform",
+        data:{},
+        created(){},
+        methods:{
+            login(){
+                let data = new FormData($("form")[0])
+                axios.post("/login",data).then(function (response) {
+                    console.log(response.data)
+                    if (response.data == 1){
+                        // alert("登录成功！")
+                        location.href="./home.html"
+                    }else if (response.data == 2) {
+                        alert("密码错误！")
+                    }else {
+                        alert("用户名不存在！")
+                    }
+                }).catch(function (error) {
+                    console.log(error)
+                })
+            }
+
+        },
+    })
+
+
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

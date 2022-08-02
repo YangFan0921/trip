@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>发布作品</title>
+	<!--字体图标cdn-->
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<!-- 新 Bootstrap 核心 CSS 文件 -->
+	<link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/send.css">
+
+	<!--主体区域结束-->
+	<script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.12/vue.min.js"></script>
+
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+	<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
+</head>
+<body>
+<header>
+    <div class="container">
+      <nav class="navbar navbar-default">
+        <div class="navbar-header">
+          <div class="logo">
+            <a href="home.html"><img src="images/logo.png"/></a>
+          </div>
+         </div>
+         <h3 >发布作品</h3>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a id="back"
+            href="home.html">返回首页</a></li>
+          </ul>
+      </nav>
+    </div>
+  </header>	 
+	 
+	<div class="container">
+		<div class="row">
+			<!--左侧主要内容-->
+			<div class="col-md-offset-2 col-md-8">
+				<div class="bs-docs-section">
+					<form id="myform" method="post"
+					enctype="multipart/form-data">
+						<div class="form-group">
+							<label   for="title">标题</label> <input type="text"
+								 	class="form-control" id="title" name="title"
+								placeholder="请输入作品标题">
+						</div>
+						<div class="form-group">
+							<label for="aabstract">作者姓名</label> <input type="text"
+								 class="form-control" id="aabstract" name="author"
+								placeholder="请输入作者姓名">
+						</div>
+						<div class="form-group">
+							<label for="intro">作品简介</label>
+							<textarea  class="form-control" rows="4" id="intro"
+								name="intro" >无详细介绍</textarea>
+						</div>
+						<div class="form-group">
+                          <label >选择分类</label>
+                          <select name="categoryId">
+							<!--option标签提交的值是受value属性决定-->
+                            <option v-for="category in categories" v-text="category.name" :value="category.id"></option>
+                          </select>
+
+						</div>
+						<div class="form-group">
+							<label for="exampleInputFile">选择文件</label>
+							<input type="file" id="exampleInputFile" name="file">
+						</div>
+
+                        <div class="text-center">
+	       					<button type="button" class="btn btn-danger btn-lg " @click="send()">发布作品</button>
+                        
+                        </div>
+					</form>
+				</div>
+			</div>
+			<!--左侧内容结束-->
+		</div>
+	</div>
+	<!--网页底部-->
+	<footer class="well container">
+			<b> Copyright © 2022 All Rights Reserved
+				 国ICP备12345678号-5 <a href="">ABC</a>
+				版权所有
+			</b> <span class="pull-right"> <b>Version</b> 0.1.0
+			</span>
+	</footer>
+
+</body>
+<script>
+	let vm_form = new Vue({
+		el:"form",
+		data:{
+			categories:[],
+		},
+		created(){
+			axios.get("/selectCategory").then(function (response) {
+				vm_form.categories=response.data
+			}).catch(function (error) {
+				console.log(error)
+			})
+		},
+		methods:{
+			send(){
+
+				// 判断是否选择了文件
+				if ($("input:last")==""){
+					alert("请选择上传的文件！")
+					return
+				}
+
+				let data = new FormData($("form")[0])
+				axios.post("/send",data).then(function (response) {
+					// console.log(response.data)
+					// alert("发布成功！")
+					location.href="home.html"
+				}).catch(function (error) {
+					console.log(error)
+				})
+			}
+
+		},
+	})
+</script>
+</html>

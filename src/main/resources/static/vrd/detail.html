@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>作品详情</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!--
+<link rel="stylesheet" type="text/css" href="../bootstrap3/css/bootstrap.css">
+-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" type="text/css" href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css"/>
+  <link rel="stylesheet" href="css/detail.css">
+</head>
+<body>
+<my-header id="vm_header" :categories="categories" :is-login="isLogin" :wd="wd" :search="search" :logout="logout"></my-header>
+  <section class="container">
+
+    <!--主体区域开始-->
+    <div class="row">
+      <!--Vue管理的元素不能嵌套 否则会失效-->
+      <div id="vm_detail" class="col-md-9">
+        <!--作品详情开始-->
+        <h2 v-text="product.title" class="page-header"></h2>
+        <div>
+          <span v-text="product.author"></span>发布于
+          <span v-text="product.created"></span>
+          <!--pull-right 相当于 float:right-->
+          <span class="pull-right">
+            <span class="fa fa-eye" v-text="product.viewCount"></span>
+            <span class="fa fa-thumbs-o-up" v-text="product.likeCount"></span>
+          </span>
+        </div>
+        <div class="text-center">
+          <button class="btn btn-info" @click="likeById(product.id)">给作品点赞</button>
+          <button class="btn btn-danger" v-if="isLogin" @click="deleteById(product.id)">删除作品</button>
+        </div>
+        <div class="imgbody">
+            <!--center-block 让元素自身居中-->
+            <img :src="product.url" class="img-responsive center-block" alt="">
+        </div>
+        <p v-text="product.intro" class="text-center"></p>
+        <!--作品详情结束-->
+      </div>
+      <div id="vm_product" class="col-md-3">
+        <!--浏览最多开始-->
+        <ul class="list-group">
+          <li class="list-group-item list-head">
+            <h4>
+              <i class="fa fa-eye">浏览最多</i>
+            </h4>
+          </li>
+          <li class="list-group-item" v-for="product in view_arr">
+            <!-- 左对齐 -->
+            <div class="media">
+              <div class="media-left">
+                <a :href="'detail.html?id='+product.id">
+                <img :src="product.url" class="media-object"
+                     style="width:60px;height: 50px">
+                </a>
+              </div>
+              <div class="media-body">
+                <a :href="'detail.html?id='+product.id">
+                <h4 class="media-heading" v-text="product.title"></h4>
+                </a>
+                <p v-text="product.author"></p>
+              </div>
+            </div>
+          </li>
+
+
+
+        </ul>
+        <!--浏览最多结束-->
+        <!--最受欢迎开始-->
+        <ul class="list-group">
+          <li class="list-group-item list-head">
+            <h4>
+              <i class="fa fa-thumbs-o-up">最受欢迎</i>
+            </h4>
+          </li>
+          <li class="list-group-item" v-for="product in like_arr">
+            <!-- 左对齐 -->
+            <div class="media">
+              <div class="media-left">
+                <a :href="'detail.html?id='+product.id">
+                <img :src="product.url" class="media-object"
+                     style="width:60px;height: 50px">
+                </a>
+              </div>
+              <div class="media-body">
+                <a :href="'detail.html?id='+product.id">
+                <h4 class="media-heading" v-text="product.title"></h4>
+                </a>
+                <p v-text="product.author"></p>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+        <!--浏览最多结束-->
+      </div>
+    </div>
+    <!--主体区域结束-->
+  </section>
+  <footer class="container">
+    <div class="well">
+      Copyright © ABC版权所有 国ICP备123456778号-0 国公网安备 123456789ABCDE号
+    </div>
+  </footer>
+</body>
+<script type="text/javascript" src="../bootstrap3/jquery.min.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/bootstrap.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/holder.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/html5shiv.min.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/css3-mediaqueries.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/respond.min.js"></script>
+<!--引入瀑布流相关的js文件-->
+<script src="js/imagesloaded.pkgd.js"></script>
+<script src="js/masonry.pkgd.min.js"></script>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/vue/2.7.6/vue.min.js"></script>
+<!--moment框架用于处理时间的格式-->
+<script src="https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.4/moment.js"></script>
+
+<script src="js/header.js"></script>
+<script src="js/product.js"></script>
+<script src="js/detail.js"></script>
+<script src="js/MyHeader.js"></script>
+<script>
+  //让轮播图 自动播放
+  // $("#myCarousel").carousel("cycle");
+
+
+
+  // 向服务器发请求 测试传递过去的cookie
+  // axios.get("/cookie").then(function (response) {
+  //   console.log(response.data)
+  // }).catch(function (error) {
+  //   console.log(error)
+  // })
+
+
+
+</script>
+</html>

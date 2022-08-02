@@ -1,0 +1,35 @@
+body {
+    background-color: rgba(214, 253, 249, 0.256);
+    color: white;
+}
+
+.row h1 {
+    color: #ffc600;
+}
+
+.control-label {
+    color: black;
+}
+
+#heading {
+    background-color: #a6f48c32;
+    color: #ffc600;
+}
+
+.panel-default {
+    border-color: #ffc600;
+}
+
+.panel-body {
+    background-color: rgba(161, 247, 240, 0.19);
+}
+
+input[type='checkbox'] {
+    position: relative;
+    top: 7px;
+    left: -10px;
+}
+
+.text-center {
+    color: black;
+}

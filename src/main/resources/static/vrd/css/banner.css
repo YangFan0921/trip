@@ -1,0 +1,39 @@
+body {
+    background-color: rgba(214, 253, 249, 0.256);
+    padding-top: 20px;
+    color: #ffc600;
+}
+
+.navbar {
+    background-color: white;
+    border: 1px solid gainsboro;
+}
+
+h3 {
+    color: #ffc600;
+    position: absolute;
+    left: 43%;
+    top: -7px;
+}
+
+.img_button {
+    margin-bottom: 20px;
+}
+
+.btn-info {
+    margin-top: 10px;
+}
+
+#back {
+    color: #ffc600;
+    position: relative;
+    left: -10px;
+}
+
+.well {
+    color: black;
+    background-color: white;
+    font-weight: bold;
+    border: 0;
+    margin-top: 20px;
+}

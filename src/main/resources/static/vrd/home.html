@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>旅拍</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!--
+<link rel="stylesheet" type="text/css" href="../bootstrap3/css/bootstrap.css">
+-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" type="text/css" href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css"/>
+  <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+<my-header id="vm_header" :categories="categories" :is-login="isLogin" :wd="wd" :search="search" :logout="logout"></my-header>
+  <section class="container">
+    <!--轮播图开始-->
+    <div id="myCarousel" class="carousel slide">
+      <!-- 轮播（Carousel）指标 -->
+      <ol class="carousel-indicators">
+        <li v-for="(banner,index) in banners" data-target="#myCarousel" :data-slide-to="index" :class="index==0 ? 'active' : ''"></li>
+      </ol>
+      <!-- 轮播（Carousel）项目 -->
+      <div class="carousel-inner">
+        <div class="item" v-for="(banner,index) in banners" :class="index==0 ? 'active' : ''">
+          <img :src="banner.url" alt="First slide">
+          <div class="carousel-caption"></div>
+        </div>
+
+      </div>
+      <!-- 轮播（Carousel）导航 -->
+      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+    <!--轮播图结束-->
+    <!--主体区域开始-->
+    <div class="row" id="vm_product">
+      <div class="col-md-9">
+        <!--瀑布流开始-->
+        <div class="grid">
+          <div class="grid-item" v-for="product in product_arr">
+            <a :href="'detail.html?id='+product.id">
+              <img :src="product.url" class="img-responsive" alt="">
+            </a>
+
+            <!--蓝条开始-->
+            <div class="floatView">
+              <p v-text="product.title"></p>
+              <span class="fa fa-eye" v-text="product.viewCount"></span>
+              <span class="fa fa-thumbs-o-up" v-text="product.likeCount"></span>
+            </div>
+            <!--蓝条结束-->
+          </div>
+        </div>
+        <!--瀑布流结束-->
+      </div>
+      <div class="col-md-3">
+        <!--浏览最多开始-->
+        <ul class="list-group">
+          <li class="list-group-item list-head">
+            <h4>
+              <i class="fa fa-eye">浏览最多</i>
+            </h4>
+          </li>
+          <li class="list-group-item" v-for="product in view_arr">
+            <!-- 左对齐 -->
+            <div class="media">
+              <div class="media-left">
+                <a :href="'detail.html?id='+product.id">
+                <img :src="product.url" class="media-object"
+                     style="width:60px;height: 50px">
+                </a>
+              </div>
+              <div class="media-body">
+                <a :href="'detail.html?id='+product.id">
+                <h4 class="media-heading" v-text="product.title"></h4>
+                </a>
+                <p v-text="product.author"></p>
+              </div>
+            </div>
+          </li>
+
+
+
+        </ul>
+        <!--浏览最多结束-->
+        <!--最受欢迎开始-->
+        <ul class="list-group">
+          <li class="list-group-item list-head">
+            <h4>
+              <i class="fa fa-thumbs-o-up">最受欢迎</i>
+            </h4>
+          </li>
+          <li class="list-group-item" v-for="product in like_arr">
+            <!-- 左对齐 -->
+            <div class="media">
+              <div class="media-left">
+                <a :href="'detail.html?id='+product.id">
+                <img :src="product.url" class="media-object"
+                     style="width:60px;height: 50px">
+                </a>
+              </div>
+              <div class="media-body">
+                <a :href="'detail.html?id='+product.id">
+                <h4 class="media-heading" v-text="product.title"></h4>
+                </a>
+                <p v-text="product.author"></p>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+        <!--浏览最多结束-->
+      </div>
+    </div>
+    <!--主体区域结束-->
+  </section>
+  <footer class="container">
+    <div class="well">
+      Copyright © ABC版权所有 国ICP备123456778号-0 国公网安备 123456789ABCDE号
+    </div>
+  </footer>
+</body>
+<script type="text/javascript" src="../bootstrap3/jquery.min.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/bootstrap.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/holder.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/html5shiv.min.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/css3-mediaqueries.js"></script>
+<script type="text/javascript" src="../bootstrap3/js/respond.min.js"></script>
+<!--引入瀑布流相关的js文件-->
+<script src="js/imagesloaded.pkgd.js"></script>
+<script src="js/masonry.pkgd.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/vue/2.7.6/vue.min.js"></script>
+
+<script src="js/header.js"></script>
+<script src="js/banner.js"></script>
+<script src="js/product.js"></script>
+<script src="js/MyHeader.js"></script>
+<script>
+  //让轮播图 自动播放
+  $("#myCarousel").carousel("cycle");
+
+
+
+  // 向服务器发请求 测试传递过去的cookie
+  // axios.get("/cookie").then(function (response) {
+  //   console.log(response.data)
+  // }).catch(function (error) {
+  //   console.log(error)
+  // })
+
+
+
+</script>
+</html>
